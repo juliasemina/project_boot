@@ -36,8 +36,11 @@
     </p>
     <p>Roles: </p>
     <th:block th:each="role: ${listRoles}">
-        <input type="checkbox" th:field="*{roles}"
-               th:text="${role.name}" th:value="${role}"/>
+        <input type="checkbox"
+               th:name="allRoles"
+               th:text="${role}"
+               th:value="${role}"
+               th:checked="${user.roles.contains(role)}"/>
     </th:block>
 
     <input type="submit" value="Обновить"/>

@@ -10,35 +10,40 @@
 <form th:method="post" th:action="@{/admin/add_user}" th:object="${user}">
     <p>
         <label for="name">Имя:</label>
-        <input type="text" th:field="*{name}" id="name"/>
+        <input type="text" th:field="*{name}" id="name" required/>
     </p>
     <p>
         <label for="surname">Фамилия:</label>
-        <input type="text" th:field="*{surname}" id="surname"/>
+        <input type="text" th:field="*{surname}" id="surname" required/>
     </p>
     <p>
         <label for="age">Возраст:</label>
-        <input type="text" th:field="*{age}" id="age"/>
+        <input type="text" th:field="*{age}" id="age" required/>
     </p>
     <p>
         <label for="email">Email:</label>
-        <input type="text" th:field="*{email}" id="email"/>
+        <input type="text" th:field="*{email}" id="email" required/>
     </p>
 
     <p>
         <label for="pass">Пароль:</label>
-        <input type="text" th:field="*{pass}" id="pass"/>
+        <input type="text" th:field="*{pass}" id="pass" required/>
     </p>
 
     <p>
         <label for="enabled">Enabled:</label>
-        <input type="checkbox" th:field="*{enabled}" id="enabled"/>
+        <input type="checkbox" th:field="*{enabled}" id="enabled" th:checked="${user.setEnabled(true)}" required/>
     </p>
     <p>Roles: </p>
-    <th:block th:each="role: ${listRoles}">
-        <input type="checkbox" th:field="*{roles}"
-               th:text="${role.name}" th:value="${role}"/>
+
+    <th:block th:each="role: ${listRoles}" required>
+        <input type="checkbox"
+               th:name="allRoles"
+               th:text="${role}"
+               th:value="${role}"
+               th:checked="${role.getName().equals('ROLE_USER')}"/>
     </th:block>
+
     </div>
 
     <input type="submit" value="Создать"/>

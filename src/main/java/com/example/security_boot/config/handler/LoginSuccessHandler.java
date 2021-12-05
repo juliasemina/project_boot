@@ -1,4 +1,4 @@
-package com.example.security_boot;
+package com.example.security_boot.config.handler;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -19,8 +19,7 @@ import java.util.Map;
 
 @Component
 public class LoginSuccessHandler implements AuthenticationSuccessHandler {
-    private RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
-
+    private final RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest httpServletRequest,

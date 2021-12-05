@@ -8,15 +8,10 @@ import java.util.List;
 import java.util.Set;
 
 public interface UserService extends UserDetailsService {
-    List<User> getUsers();
+    public List<User> getUsers();
+    public User findByUsername(String username);
+    public User save(User user);
+    public User getUserbyId(Long id);
+    public void delete(Long id);
 
-    void save(User user);
-
-    User getUserbyId(Long id);
-
-    void delete(Long id);
-
-    Set<Role> getAllRols();
-
-    User findByUsername(String username);
-}
+    }
