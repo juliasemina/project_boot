@@ -61,17 +61,6 @@ public class UserController {
         return "users/add_user";
     }
 
-    @PostMapping("admin/add_user")
-    public String create(@ModelAttribute("user") User user, @RequestParam(value = "allRoles", required = false) String[] allRoles) {
-        Set<Role> roleSet = new HashSet<>();
-        for (String roles : allRoles) {
-            roleSet.add(roleService.getRoleByName(roles));
-        }
-        user.setRoles(roleSet);
-        userService.save(user);
-        return "redirect:/admin/list_users";
-    }
-
     @GetMapping("admin/edit_user")
     public String edit(@RequestParam(value = "id", required = false) Long id, Model model) {
         model.addAttribute("listRoles", roleService.getAllRoles());
@@ -80,13 +69,15 @@ public class UserController {
         return "users/edit_user";
     }
 
-    @PatchMapping("admin/edit_user")
-    public String edit(@ModelAttribute("user") User user, @RequestParam(value = "allRoles", required = false) String[] allRoles) {
-        Set<Role> roleSet = new HashSet<>();
-        for (String roles : allRoles) {
-            roleSet.add(roleService.getRoleByName(roles));
+    @PostMapping("admin/update_user")
+    public String create(@ModelAttribute("user") User user, @RequestParam(value = "allRoles", required = false) String[] allRoles) {
+        if (allRoles != null) {
+            Set<Role> roleSet = new HashSet<>();
+            for (String roles : allRoles) {
+                roleSet.add(roleService.getRoleByName(roles));
+            }
+            user.setRoles(roleSet);
         }
-        user.setRoles(roleSet);
         userService.save(user);
         return "redirect:/admin/list_users";
     }

@@ -7,7 +7,7 @@
 </head>
 <body>
 
-<form th:method="patch" th:action="@{/admin/edit_user(id=${user.getId()})}" th:object="${user}">
+<form th:method="post" th:action="@{/admin/update_user(id=${user.getId()})}" th:object="${user}">
     <p>
         <label for="name">Имя: </label>
         <input type="text" th:field="*{name}" id="name"/>

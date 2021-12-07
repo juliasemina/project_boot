@@ -56,7 +56,7 @@ public class UserServiceImpl implements UserService {
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository, @Lazy BCryptPasswordEncoder bCryptPasswordEncoder) {
+    public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository, BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
@@ -74,30 +74,33 @@ public class UserServiceImpl implements UserService {
     @Override
     public User save(User user) {
 
-        User newUser = new User();
-        newUser.setName(user.getName());
-        newUser.setSurname(user.getSurname());
-        newUser.setAge(user.getAge());
-        newUser.setEmail(user.getEmail());
-        newUser.setEnabled(user.isEnabled());
-        newUser.setPass(bCryptPasswordEncoder.encode(user.getPassword()));
+//        User newUser = new User();
+//        newUser.setName(user.getName());
+//        newUser.setSurname(user.getSurname());
+//        newUser.setAge(user.getAge());
+//        newUser.setEmail(user.getEmail());
+//        newUser.setEnabled(user.isEnabled());
+//        newUser.setPass(bCryptPasswordEncoder.encode(user.getPassword()));
 
-        if (user.getRoles().isEmpty()) {
-            newUser.addRole(roleRepository.getRoleByName("ROLE_USER"));
-        }
-        Set<Role> roles = user.getRoles();
-        for (Role role : roles) {
-            newUser.addRole(roleRepository.getRoleByName(role.getName()));
-        }
-        if (user.getId() == null) {
-            userRepository.save(user);
+//        if (user.getRoles().isEmpty()) {
+//            user.addRole(roleRepository.getRoleByName("ROLE_USER"));
+//        }
+//        Set<Role> roles = user.getRoles();
+//        for (Role role : roles) {
+//            newUser.addRole(roleRepository.getRoleByName(role.getName()));
+//        }
+//        if (user.getId() == null) {
+//            user.setPass(bCryptPasswordEncoder.encode(user.getPassword()));
+//            userRepository.save(user);
+//
+//        } else {
+//            Long id = user.getId();
+//            newUser.setId(id);
 
-        } else {
-            Long id = user.getId();
-            newUser.setId(id);
-            userRepository.save(newUser);
-        }
-        return newUser;
+        user.setPass(bCryptPasswordEncoder.encode(user.getPassword()));
+        userRepository.save(user);
+
+        return user;
     }
 
     @Override
@@ -108,16 +111,5 @@ public class UserServiceImpl implements UserService {
     @Override
     public void delete(Long id) {
         userRepository.deleteById(id);
-    }
-
-    @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = findByUsername(username);
-        if (user == null) {
-            throw new UsernameNotFoundException("User not found");
-        }
-        System.out.println(user.getRoles());
-
-        return user;
     }
 }

@@ -1,6 +1,7 @@
 package com.example.security_boot.config;
 
 import com.example.security_boot.config.handler.LoginSuccessHandler;
+import com.example.security_boot.service.UserDetailServiceImpl;
 import com.example.security_boot.service.UserService;
 import com.example.security_boot.service.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,11 +18,11 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private final UserService userService;
+    private final UserDetailServiceImpl userDetailService;
 
     @Autowired
-    public WebSecurityConfig(UserServiceImpl userService) {
-        this.userService = userService;
+    public WebSecurityConfig(UserDetailServiceImpl userDetailService) {
+        this.userDetailService = userDetailService;
     }
 
     @Bean
@@ -60,6 +61,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     protected void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userService).passwordEncoder(bCryptPasswordEncoder());
+        auth.userDetailsService(userDetailService).passwordEncoder(bCryptPasswordEncoder());
     }
 }

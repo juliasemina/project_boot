@@ -7,7 +7,7 @@
 </head>
 <body>
 
-<form th:method="post" th:action="@{/admin/add_user}" th:object="${user}">
+<form th:method="post" th:action="@{/admin/update_user}" th:object="${user}">
     <p>
         <label for="name">Имя:</label>
         <input type="text" th:field="*{name}" id="name" required/>
