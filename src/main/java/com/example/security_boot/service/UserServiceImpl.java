@@ -52,15 +52,14 @@ public class UserServiceImpl implements UserService {
     private EntityManager em;
 
     private final UserRepository userRepository;
-    private final RoleRepository roleRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository, BCryptPasswordEncoder bCryptPasswordEncoder) {
+    public UserServiceImpl(UserRepository userRepository, BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.userRepository = userRepository;
-        this.roleRepository = roleRepository;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
+
     @Override
     public List<User> getUsers() {
         return userRepository.findAll();
@@ -73,30 +72,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User save(User user) {
-
-//        User newUser = new User();
-//        newUser.setName(user.getName());
-//        newUser.setSurname(user.getSurname());
-//        newUser.setAge(user.getAge());
-//        newUser.setEmail(user.getEmail());
-//        newUser.setEnabled(user.isEnabled());
-//        newUser.setPass(bCryptPasswordEncoder.encode(user.getPassword()));
-
-//        if (user.getRoles().isEmpty()) {
-//            user.addRole(roleRepository.getRoleByName("ROLE_USER"));
-//        }
-//        Set<Role> roles = user.getRoles();
-//        for (Role role : roles) {
-//            newUser.addRole(roleRepository.getRoleByName(role.getName()));
-//        }
-//        if (user.getId() == null) {
-//            user.setPass(bCryptPasswordEncoder.encode(user.getPassword()));
-//            userRepository.save(user);
-//
-//        } else {
-//            Long id = user.getId();
-//            newUser.setId(id);
-
         user.setPass(bCryptPasswordEncoder.encode(user.getPassword()));
         userRepository.save(user);
 
